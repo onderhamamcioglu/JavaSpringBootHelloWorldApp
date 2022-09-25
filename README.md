@@ -1,10 +1,10 @@
 # Proje 1
 ## Temel olarak bir platform üzerinde CI/CD tekniklerinin uygulanması
 
-- [ ] Seçilecek bir Continuous Integration platformunda (Azure DevOps, Gitlab, GitHub vb..) "Azure DevOps tercihimizdir" yeni proje
+- [X] Seçilecek bir Continuous Integration platformunda (Azure DevOps, Gitlab, GitHub vb..) "Azure DevOps tercihimizdir" yeni proje
 açıp, temel Work Item Management ihtiyaçları için örnek bir iki iş maddesi (PBI, Task vb..) oluşturmak.
 - [Issues](https://github.com/onderhamamcioglu/Task1/issues?q=)
-- [ ] Örnek bir web projesinin kodlarını git üzerinden bu platforma yüklemek. (Mümkünse feature-branching tekniğini uygulamak)
+- [X] Örnek bir web projesinin kodlarını git üzerinden bu platforma yüklemek. (Mümkünse feature-branching tekniğini uygulamak)
 - [Branches](https://github.com/onderhamamcioglu/Task1/branches)
 - [ ]  Pipeline tasarımı yapıp projenin her değişiklikle derlenmesinin ve paketlerin (artifact'larının) oluşmasının sağlanması
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml)
