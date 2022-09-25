@@ -1,0 +1,17 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - prod
+
+env:
+
+jobs:
+  Pipeline:
+    name: Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
