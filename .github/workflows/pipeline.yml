@@ -38,21 +38,21 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
-          docker build --tag "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
-          docker build --tag "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest" .
+          docker build --tag "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
+          docker build --tag "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest" .
 
       # Push the Docker image to GitHub Container Registry
       - name: Publish
         run: |-
-          docker push "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
-          docker push "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest"
+          docker push "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
+          docker push "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest"
 
       # Deploy to Google Cloud Run
       - name: Deploy
         run: |
-          gcloud run deploy helloworld \
-          --region europe-west1 \
-          --image gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest \
+          gcloud run deploy task1 \
+          --region europe-west3 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest \
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
