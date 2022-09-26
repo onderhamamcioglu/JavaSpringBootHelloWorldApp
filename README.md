@@ -6,7 +6,7 @@ açıp, temel Work Item Management ihtiyaçları için örnek bir iki iş maddes
 - [Issues](https://github.com/onderhamamcioglu/Task1/issues?q=)
 - [X] Örnek bir web projesinin kodlarını git üzerinden bu platforma yüklemek. (Mümkünse feature-branching tekniğini uygulamak)
 - [Branches](https://github.com/onderhamamcioglu/Task1/branches)
-- [ ]  Pipeline tasarımı yapıp projenin her değişiklikle derlenmesinin ve paketlerin (artifact'larının) oluşmasının sağlanması
+- [X]  Pipeline tasarımı yapıp projenin her değişiklikle derlenmesinin ve paketlerin (artifact'larının) oluşmasının sağlanması
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml)
 - [ ]  Pipeline'a statik kod analizi yapan çözümlerin eklenmesi (SonarQube task'ının mümkünse QualityGateway'den geçmezse
 pipeline'ın ilerlememesi)
