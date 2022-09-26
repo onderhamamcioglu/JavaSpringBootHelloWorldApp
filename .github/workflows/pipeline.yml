@@ -57,7 +57,7 @@ jobs:
         run: |
           gcloud run deploy helloworld \
           --region europe-west1 \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld \
+          --image ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest \
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
