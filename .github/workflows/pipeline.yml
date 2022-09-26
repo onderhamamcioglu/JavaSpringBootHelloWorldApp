@@ -26,6 +26,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: prod
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USE_FIND_ALGORITHM: true
           FILTER_REGEX_INCLUDE: .*src/.*
 
       - name: Set up Cloud SDK
