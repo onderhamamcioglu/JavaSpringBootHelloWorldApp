@@ -10,13 +10,13 @@ açıp, temel Work Item Management ihtiyaçları için örnek bir iki iş maddes
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml)
 - [X]  Pipeline'a statik kod analizi yapan çözümlerin eklenmesi (SonarQube task'ının mümkünse QualityGateway'den geçmezse
 pipeline'ın ilerlememesi)
-- 
+- [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) | [Kullanılan Method: Super-Linter](https://github.com/github/super-linter)
 - [ ] Temel test tekniklerinin otomasyon ile (pipeline üzerinde) uygulanması. Unit test'lerin çalışması, API testlerin koşturulması
 (varsa bir iki adet yeterli.) "Postman tercihimizdir"
 -
 - [ ] Fonksiyonel testlerin senaryolarının yazılıp, pipeline üzerinde entegrasyonun her hangi bir çözüm üzerinden yapılması.
 (Selenium, Katalon, UFT vb..) "Opsiyonel"
 -
-- [ ] Oluşan ve testlerden geçmiş paketlerin otomatik olarak bir ortama (Local sunucu, VM veya bulut ortamında olabilir)
+- [X] Oluşan ve testlerden geçmiş paketlerin otomatik olarak bir ortama (Local sunucu, VM veya bulut ortamında olabilir)
 teslimatının "deployment" yapılması
 - ![Pipeline](https://github.com/onderhamamcioglu/Task1/actions/workflows/pipeline.yml/badge.svg)
