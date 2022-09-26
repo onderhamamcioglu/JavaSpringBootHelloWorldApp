@@ -35,29 +35,24 @@ jobs:
           GIT_HASH=$(git rev-parse --short "${GITHUB_SHA}")
           echo "##[set-output name=docker_tag;]$(echo ${GITHUB_REF##*/}-${GIT_HASH})"
 
-      # Login Docker to GitHub
-      - name: Login
-        run: |-
-          docker login ghcr.io -u ${{ secrets.GIT_USER }} -p ${{ secrets.GIT_KEY }}
-
       # Build the Docker image
       - name: Build
         run: |-
-          docker build --tag "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
-          docker build --tag "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest" .
+          docker build --tag "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
+          docker build --tag "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest" .
 
       # Push the Docker image to GitHub Container Registry
       - name: Publish
         run: |-
-          docker push "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
-          docker push "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest"
+          docker push "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
+          docker push "gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest"
 
       # Deploy to Google Cloud Run
       - name: Deploy
         run: |
           gcloud run deploy helloworld \
           --region europe-west1 \
-          --image ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest \
+          --image gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest \
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
