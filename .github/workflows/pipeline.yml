@@ -23,11 +23,9 @@ jobs:
       - name: Linters Static Analysis
         uses: github/super-linter@v4
         env:
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: prod
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USE_FIND_ALGORITHM: true
-          FILTER_REGEX_INCLUDE: .*src/.*
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
