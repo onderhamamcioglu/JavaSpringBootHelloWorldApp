@@ -6,6 +6,8 @@ on:
       - prod
 
 env:
+  DEPLOYMENT_NAME: task1  # Add your deployment name here.
+  IMAGE: task1
 
 jobs:
   Pipeline:
@@ -15,3 +17,47 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      - run: |-
+          gcloud --quiet auth configure-docker
+      - name: Declare docker tag variables
+        id: vars
+        shell: bash
+        run: |
+          GIT_HASH=$(git rev-parse --short "${GITHUB_SHA}")
+          echo "##[set-output name=docker_tag;]$(echo ${GITHUB_REF##*/}-${GIT_HASH})"
+
+      # Login Docker to GitHub
+      - name: Login
+        run: |-
+          docker login ghcr.io -u ${{ secrets.GIT_USER }} -p ${{ secrets.GIT_KEY }}
+
+      # Build the Docker image
+      - name: Build
+        run: |-
+          docker build --tag "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
+          docker build --tag "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest" .
+
+      # Push the Docker image to GitHub Container Registry
+      - name: Publish
+        run: |-
+          docker push "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
+          docker push "ghcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest"
+
+      # Deploy to Google Cloud Run
+      - name: Deploy
+        run: |
+          gcloud run deploy helloworld \
+          --region europe-west1 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld \
+          --platform managed \
+          --allow-unauthenticated \
+          --project ${{ secrets.GCP_PROJECT_ID }}
