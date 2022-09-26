@@ -50,9 +50,9 @@ jobs:
       # Deploy to Google Cloud Run
       - name: Deploy
         run: |
-          gcloud run deploy helloworld \
-          --region europe-west1 \
-          --image gcr.io/${{ secrets.GIT_USER }}/$IMAGE:latest \
+          gcloud run deploy task1 \
+          --region europe-west3 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest \
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT_ID }}
