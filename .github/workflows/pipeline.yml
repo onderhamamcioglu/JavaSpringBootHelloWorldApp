@@ -26,6 +26,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: prod
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USE_FIND_ALGORITHM: true
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
