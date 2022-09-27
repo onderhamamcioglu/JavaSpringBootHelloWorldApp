@@ -66,4 +66,4 @@ jobs:
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest \
           --platform managed \
           --allow-unauthenticated \
-          --project ${{ secrets.GCP_PROJECT_ID }}
+          --project ${{ secrets.GCP_PROJECT_ID }} | grep -w "Service URL:"
