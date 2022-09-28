@@ -19,4 +19,4 @@ pipeline'ın ilerlememesi)
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) içerisine Java ile yazılmış Selenium Testi eklendi
 - [X] Oluşan ve testlerden geçmiş paketlerin otomatik olarak bir ortama (Local sunucu, VM veya bulut ortamında olabilir)
 teslimatının "deployment" yapılması
-- ![Pipeline](https://github.com/onderhamamcioglu/Task1/actions/workflows/pipeline.yml/badge.svg)
+- ![Pipeline](https://github.com/onderhamamcioglu/Task1/actions/workflows/pipeline.yml/badge.svg) | https://task1-fqoaam3z4q-ey.a.run.app/
