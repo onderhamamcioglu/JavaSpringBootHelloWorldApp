@@ -13,7 +13,7 @@ pipeline'ın ilerlememesi)
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) | [Kullanılan Yöntem: Super-Linter](https://github.com/github/super-linter)
 - [X] Temel test tekniklerinin otomasyon ile (pipeline üzerinde) uygulanması. Unit test'lerin çalışması, API testlerin koşturulması
 (varsa bir iki adet yeterli.) "Postman tercihimizdir"
-- Pipeline üzerinde Newman ile Postman koleksiyonları çalıştırılıyor.
+- [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) üzerinde Newman ile Postman koleksiyonları çalıştırılıyor.
 - [X] Fonksiyonel testlerin senaryolarının yazılıp, pipeline üzerinde entegrasyonun her hangi bir çözüm üzerinden yapılması.
 (Selenium, Katalon, UFT vb..) "Opsiyonel"
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) içerisine Java ile yazılmış Selenium Testi eklendi
