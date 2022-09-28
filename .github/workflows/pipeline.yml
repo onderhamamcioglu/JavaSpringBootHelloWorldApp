@@ -102,7 +102,7 @@ jobs:
       - name: Install Google Chrome # Using shell script to install Google Chrome
         run: |
           chmod +x ./SeleniumTest/scripts/InstallChrome.sh
-           ./Selenium/scripts/InstallChrome.sh
+           ./SeleniumTest/scripts/InstallChrome.sh
       - name: Grant execute permission for gradlew
         run: chmod +x SeleniumTest/gradlew # give permission to Gradle to run the commands
       - name: Build with Gradle
