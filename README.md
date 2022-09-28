@@ -14,9 +14,9 @@ pipeline'ın ilerlememesi)
 - [X] Temel test tekniklerinin otomasyon ile (pipeline üzerinde) uygulanması. Unit test'lerin çalışması, API testlerin koşturulması
 (varsa bir iki adet yeterli.) "Postman tercihimizdir"
 - Pipeline üzerinde Newman ile Postman koleksiyonları çalıştırılıyor.
-- [ ] Fonksiyonel testlerin senaryolarının yazılıp, pipeline üzerinde entegrasyonun her hangi bir çözüm üzerinden yapılması.
+- [X] Fonksiyonel testlerin senaryolarının yazılıp, pipeline üzerinde entegrasyonun her hangi bir çözüm üzerinden yapılması.
 (Selenium, Katalon, UFT vb..) "Opsiyonel"
--
+- [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) içerisine Java ile yazılmış Selenium Testi eklendi
 - [X] Oluşan ve testlerden geçmiş paketlerin otomatik olarak bir ortama (Local sunucu, VM veya bulut ortamında olabilir)
 teslimatının "deployment" yapılması
 - ![Pipeline](https://github.com/onderhamamcioglu/Task1/actions/workflows/pipeline.yml/badge.svg)
