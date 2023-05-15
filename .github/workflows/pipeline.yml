@@ -3,7 +3,7 @@ name: Pipeline
 on:
   push:
     branches:
-      - prod
+      - main #prod
 
 env:
   DEPLOYMENT_NAME: task1  # Add your deployment name here.
