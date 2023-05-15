@@ -3,11 +3,11 @@ name: Pipeline
 on:
   push:
     branches:
-      - main #prod
+      - prod
 
 env:
-  DEPLOYMENT_NAME: task1  # Add your deployment name here.
-  IMAGE: task1
+  IMAGE: JavaSpringBootHelloWorldApp
+  GITHUB_ACCOUNT: onderhamamcioglu
 
 jobs:
   Pipeline:
@@ -19,93 +19,23 @@ jobs:
         uses: actions/checkout@v3
 
       # Static Code Analysis using Linters
-
       - name: Linters Static Analysis
-        uses: github/super-linter@v4
+        uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: false #change to true if you want all files to be "linted"
           DEFAULT_BRANCH: prod
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
           # FILTER_REGEX_EXCLUDE: .*.github/.*
 
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-      # Configure Docker to use the gcloud command-line tool as a credential
-      # helper for authentication
-      - run: |-
-          gcloud --quiet auth configure-docker
-      - name: Declare docker tag variables
-        id: vars
-        shell: bash
-        run: |
-          GIT_HASH=$(git rev-parse --short "${GITHUB_SHA}")
-          echo "##[set-output name=docker_tag;]$(echo ${GITHUB_REF##*/}-${GIT_HASH})"
-
-      # Build the Docker image
-      - name: Build
+      # Build & Push the Docker image
+      - name: Build & Push
         run: |-
-          docker build --tag "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
-          docker build --tag "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest" .
+          docker login ghcr.io -u onderhamamcioglu -p ${{ secrets.GITHUB_TOKEN }} 
+          docker build --tag "ghcr.io/$GITHUBACCOUNT/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
+          docker build --tag "ghcr.io/$GITHUBACCOUNT/$IMAGE:latest" .
+          docker push "ghcr.io/$GITHUBACCOUNT/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
+          docker push "ghcr.io/$GITHUBACCOUNT/$IMAGE:latest"
 
-      # Push the Docker image to GitHub Container Registry
-      - name: Publish
-        run: |-
-          docker push "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
-          docker push "gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest"
+      # Deploy to AWS
+    
 
-      # Deploy to Google Cloud Run
-      - name: Deploy
-        run: |
-          gcloud run deploy task1 \
-          --region europe-west3 \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE:latest \
-          --platform managed \
-          --allow-unauthenticated \
-
-      # Install Node on the runner
-      - name: Install Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-
-      # Install the newman command line utility and also install the html extra reporter
-      - name: Install newman
-        run: |
-          npm install -g newman
-          npm install -g newman-reporter-htmlextra
-
-      # Make directory to upload the test results
-      - name: Make Directory for results
-        run: mkdir -p testResults
-
-      # Run the POSTMAN collection
-      - name: Run POSTMAN collection
-        run: |
-          newman run ./tests/Test.postman_collection.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
-
-      # Upload the contents of Test Results directory to workspace
-      - name: Output the run Details
-        uses: actions/upload-artifact@v2
-        with:
-          name: RunReports
-          path: testResults
-          
-      - name: Set up JDK 18
-        uses: actions/setup-java@v3
-        with:
-            distribution: 'temurin'
-            java-version: '18'
-
-      - name: Install Google Chrome # Using shell script to install Google Chrome
-        run: |
-          chmod +x ./SeleniumTest/scripts/InstallChrome.sh
-           ./SeleniumTest/scripts/InstallChrome.sh
-      - name: Grant execute permission for gradlew
-        run: chmod +x SeleniumTest/gradlew # give permission to Gradle to run the commands
-      - name: Build Selenium Test with Gradle
-        run: ./SeleniumTest/gradlew test --info # Run our tests using Gradle
