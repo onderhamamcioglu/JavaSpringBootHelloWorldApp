@@ -6,7 +6,7 @@ on:
       - prod
 
 env:
-  IMAGE: JavaSpringBootHelloWorldApp
+  IMAGE: javaspringboothelloworldapp
   GITHUB_USER: onderhamamcioglu
 
 jobs:
