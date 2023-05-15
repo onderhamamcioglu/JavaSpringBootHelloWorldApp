@@ -7,7 +7,7 @@ on:
 
 env:
   IMAGE: JavaSpringBootHelloWorldApp
-  GITHUB_ACCOUNT: onderhamamcioglu
+  GITHUB_USER: onderhamamcioglu
 
 jobs:
   Pipeline:
@@ -30,12 +30,24 @@ jobs:
       # Build & Push the Docker image
       - name: Build & Push
         run: |-
-          docker login ghcr.io -u onderhamamcioglu -p ${{ secrets.GITHUB_TOKEN }} 
-          docker build --tag "ghcr.io/$GITHUBACCOUNT/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
-          docker build --tag "ghcr.io/$GITHUBACCOUNT/$IMAGE:latest" .
-          docker push "ghcr.io/$GITHUBACCOUNT/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
-          docker push "ghcr.io/$GITHUBACCOUNT/$IMAGE:latest"
+          docker login ghcr.io -u $GITHUB_USER -p ${{ secrets.GITHUB_TOKEN }} 
+          docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
+          docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:latest" .
+          docker push "ghcr.io/$GITHUB_USER/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
+          docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
       # Deploy to AWS
     
-
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@main #THIS ACTION CANNOT GET ENV. VARIABLES EXPORT THEM IN SCRIPT!!!!!!!!
+        env:
+          REMOTE_HOST: IP
+          REMOTE_USER: ubuntu
+          SSH_PRIVATE_KEY: ${{ secrets.KEY_PAIR }}
+          REMOTE_PORT: 22
+          SCRIPT_AFTER: |
+            sudo docker login ghcr.io -u $GITHUB_USER -p $GITHUB_PASS
+            sudo docker pull ghcr.io/un5top/duracad-frontend:latest
+            sudo docker rm $(sudo docker stop $(sudo docker ps -a -q --filter ancestor=dokku/frontend:latest --format="{{.ID}}"))
+            sudo docker run -p8080:8080 $IMAGE:latest
+            sudo docker container ls
