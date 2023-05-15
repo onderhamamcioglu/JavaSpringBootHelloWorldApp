@@ -8,7 +8,5 @@
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) üzerinde [Super-Linter](https://github.com/github/super-linter) ile statik kod analizi gerçekleştiriliyor.
 - [X] Temel test tekniklerinin otomasyon ile (pipeline üzerinde) uygulanması. Unit test'lerin çalışması, API testlerin koşturulması.
 - [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) üzerinde Newman ile Postman koleksiyonları çalıştırılıyor.
-- [X] Fonksiyonel testlerin senaryolarının yazılıp, pipeline üzerinde entegrasyonun her hangi bir çözüm üzerinden yapılması.
-- [Pipeline](https://github.com/onderhamamcioglu/Task1/blob/prod/.github/workflows/pipeline.yml) içerisine Java ile yazılmış [Selenium Testi](https://github.com/onderhamamcioglu/Task1/tree/prod/SeleniumTest) eklendi
 - [X] Oluşan ve testlerden geçmiş paketlerin otomatik olarak bir ortama deploy edilmesi
 - ![Pipeline](https://github.com/onderhamamcioglu/Task1/actions/workflows/pipeline.yml/badge.svg) | 
