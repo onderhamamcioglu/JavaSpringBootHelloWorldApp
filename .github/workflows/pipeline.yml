@@ -30,7 +30,7 @@ jobs:
       # Build & Push the Docker image
       - name: Build & Push
         run: |-
-          docker login ghcr.io -u ${GITHUB_USER} -p ${{ secrets.GITHUB_TOKEN }}  
+          docker login ghcr.io -u onderhamamcioglu -p ${{ secrets.GITHUB_TOKEN }}  
           docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:latest" .
           docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
