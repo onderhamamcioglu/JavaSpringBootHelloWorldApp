@@ -31,9 +31,7 @@ jobs:
       - name: Build & Push
         run: |-
           docker login ghcr.io -u $GITHUB_USER -p ${{ secrets.GITHUB_TOKEN }} 
-          docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:${{ steps.vars.outputs.docker_tag }}" .
           docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:latest" .
-          docker push "ghcr.io/$GITHUB_USER/$IMAGE:${{ steps.vars.outputs.docker_tag }}"
           docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
       # Deploy to AWS
@@ -41,7 +39,7 @@ jobs:
       - name: Deploy
         uses: easingthemes/ssh-deploy@main #THIS ACTION CANNOT GET ENV. VARIABLES EXPORT THEM IN SCRIPT!!!!!!!!
         env:
-          REMOTE_HOST: IP
+          REMOTE_HOST: 3.125.204.220
           REMOTE_USER: ubuntu
           SSH_PRIVATE_KEY: ${{ secrets.KEY_PAIR }}
           REMOTE_PORT: 22
