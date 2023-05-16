@@ -30,7 +30,7 @@ jobs:
       # Build & Push the Docker image
       - name: Build & Push
         run: |-
-          docker login ghcr.io -u onderhamamcioglu -p ${{ secrets.GITHUB_TOKEN }} 
+          docker login ghcr.io -u ${GITHUB_USER} -p ${{ secrets.GITHUB_TOKEN }}  
           docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:latest" .
           docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
@@ -43,7 +43,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY_PAIR }}
           script: |-
-            sudo docker login ghcr.io -u $GITHUB_USER -p ${{ secrets.GITHUB_TOKEN }} 
+            docker login ghcr.io -u ${GITHUB_USER} -p ${{ secrets.GITHUB_TOKEN }} 
             sudo docker pull ghcr.io/$GITHUB_USER/$IMAGE:latest
             sudo docker run -p8080:8080 $IMAGE:latest
             sudo docker container ls
