@@ -34,16 +34,18 @@ jobs:
           docker build --tag "ghcr.io/$GITHUB_USER/$IMAGE:latest" .
           docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
-      # Deploy to AWS
-      
-      - name: multiple command
-        uses: appleboy/ssh-action@v0.1.10
+      # Deploy to AWS      
+            
+      - name: Setup SSH connection
+        uses: webfactory/ssh-agent@v0.5.0
         with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ubuntu
-          key: ${{ secrets.KEY_PAIR }}
-          script: |-
-            docker login -u onderhamamcioglu -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
-            sudo docker pull ghcr.io/$GITHUB_USER/$IMAGE:latest
-            sudo docker run -p8080:8080 $IMAGE:latest
-            sudo docker container ls
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          ssh-add <(echo "${{ secrets.SSH_PRIVATE_KEY }}")
+
+      - name: Run Docker commands
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.HOSTNAME }} "sudo docker login ghcr.io -u $GITHUB_USER -p ${{ secrets.GITHUB_TOKEN }} && \
+          sudo docker pull ghcr.io/$GITHUB_USER/$IMAGE:latest && \
+          sudo docker run -p8080:8080 ghcr.io/$GITHUB_USER/$IMAGE:latest && \
+          sudo docker container ls"
