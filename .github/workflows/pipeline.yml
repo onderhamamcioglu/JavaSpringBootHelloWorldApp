@@ -35,17 +35,15 @@ jobs:
           docker push "ghcr.io/$GITHUB_USER/$IMAGE:latest"
 
       # Deploy to AWS
-    
-      - name: Deploy
-        uses: easingthemes/ssh-deploy@main #THIS ACTION CANNOT GET ENV. VARIABLES EXPORT THEM IN SCRIPT!!!!!!!!
-        env:
-          REMOTE_HOST: 3.125.204.220
-          REMOTE_USER: ubuntu
-          SSH_PRIVATE_KEY: ${{ secrets.KEY_PAIR }}
-          REMOTE_PORT: 22
-          SCRIPT_AFTER: |
-            sudo docker login ghcr.io -u $GITHUB_USER -p $GITHUB_PASS
-            sudo docker pull ghcr.io/un5top/duracad-frontend:latest
-            sudo docker rm $(sudo docker stop $(sudo docker ps -a -q --filter ancestor=dokku/frontend:latest --format="{{.ID}}"))
+      
+      - name: multiple command
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ubuntu
+          key: ${{ secrets.KEY_PAIR }}
+          script: |-
+            sudo docker login ghcr.io -u $GITHUB_USER -p ${{ secrets.GITHUB_TOKEN }} 
+            sudo docker pull ghcr.io/$GITHUB_USER/$IMAGE:latest
             sudo docker run -p8080:8080 $IMAGE:latest
             sudo docker container ls
