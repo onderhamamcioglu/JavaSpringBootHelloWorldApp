@@ -43,7 +43,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY_PAIR }}
           script: |-
-            sudo docker login -u ${{GITHUB_USER}} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
-            sudo docker pull ghcr.io/${{GITHUB_USER}}/${{IMAGE}}:latest
-            sudo docker run -p8080:8080 ${{IMAGE}}:latest
+            sudo docker login -u ${{ env.GITHUB_USER }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+            sudo docker pull ghcr.io/${{ env.GITHUB_USER }}/${{ env.IMAGE }}:latest
+            sudo docker run -p8080:8080 ${{ env.IMAGE }}:latest
             sudo docker container ls
