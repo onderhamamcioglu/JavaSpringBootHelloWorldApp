@@ -45,5 +45,5 @@ jobs:
           script: |-
             sudo docker login -u ${{ env.GITHUB_USER }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
             sudo docker pull ghcr.io/${{ env.GITHUB_USER }}/${{ env.IMAGE }}:latest
-            sudo docker run -p8080:8080 ${{ env.IMAGE }}:latest
+            sudo docker run -p8080:8080 ghcr.io/${{ env.GITHUB_USER }}/${{ env.IMAGE }}:latest
             sudo docker container ls
